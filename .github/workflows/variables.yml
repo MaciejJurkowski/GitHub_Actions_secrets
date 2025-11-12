@@ -7,18 +7,19 @@ on:
   workflow_dispatch:
 env:
   cat_name: "Puszek.."
+  WORKFLOW_VAR: "workflow"
 
 jobs:
   display-variables:
     name: ${{vars.ENVIRONMENT_VAR}}
     env:
-      JOB_VAR: "30 i 3"
+      JOB_VAR: "30 i 3 - job"
     runs-on: ubuntu-latest
     environment: test
     steps:
       - name: Use var 1
         env:
-          STEP_VAR: "40 i 4"
+          STEP_VAR: "40 i 4 - step"
         run: |
           echo "Repository variable : ${{vars.REPOSITORY_VAR}}"
           echo "Organization variable : ${{vars.ORGANIZATION_VAR}}"
@@ -30,7 +31,7 @@ jobs:
 
       - name: Use variables 1
         run: |
-           echo "Ala ma kota o nazwie <WYPISZ TU IMIĘ KOTA ZAPISANE W ZMIENNEJ $cat_name"
+           echo "Ala ma kota o nazwie $cat_name"
            echo "Powinna być zmienna w scopie workflow: $WORKFLOW_VAR"
            echo "Powinna być zmienna w scopie joba: $JOB_VAR"
            echo "NIE powinna być zmienna w scopie stepu: $STEP_VAR"
