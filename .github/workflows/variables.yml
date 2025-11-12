@@ -6,7 +6,7 @@ name: zmienne i niestałe
 on:
   workflow_dispatch:
 env:
-  cat_name: "Puszek"
+  cat_name: "Puszek.."
 
 jobs:
   display-variables:
