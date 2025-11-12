@@ -11,8 +11,8 @@ env:
 jobs:
   display-variables:
     name: ${{ var.ENVIRONMENT_VAR }}
-    environment: test
     runs-on: ubuntu-latest
+    environment: test
     steps:
       - name: Use var 1
         run: |
