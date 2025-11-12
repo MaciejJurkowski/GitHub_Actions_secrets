@@ -12,6 +12,7 @@ on:
         required: true
         type: choice
       environment:
+        required: true
         type: environment
 
 jobs:
