@@ -7,11 +7,11 @@ on:
   workflow_dispatch:
 env:
   cat_name: "Puszek"
-  
+
 jobs:
   display-variables:
-    environment: test
     name: ${{ var.ENVIRONMENT_VAR }}
+    environment: test
     runs-on: ubuntu-latest
     steps:
       - name: Use var 1
