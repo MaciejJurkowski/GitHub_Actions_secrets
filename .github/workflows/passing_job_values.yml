@@ -1,0 +1,70 @@
+# This is a basic workflow to help you get started with Actions
+
+name: passing job values
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  pass_in_one_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set color
+        id: color-selector
+        run: echo "COLOR=SET_RED" >> "$GITHUB_OUTPUT"
+      - name: Get color
+        env:
+          COLOR: ${{steps.color-selector.outputs.COLOR}}
+        run: echo "The selected color is $COLOR"
+        
+  producer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make a sentence
+        id: sentence_maker
+        run: |
+            # USTAW ZMIENNĄ ŚRODOWISKOWĄ
+            echo "SEN=Tak poproszę" >> "$GITHUB_OUTPUT"
+    outputs:
+      sen: ${{steps.sentence_maker.outputs.SEN}}
+
+  consumer:
+    runs-on: ubuntu-latest
+    needs: [producer]
+    steps:
+      - name: Print the message
+        env:
+          message: ${{needs.producer.outputs.sen}}
+        run: |
+          echo $message
+
+  job_1:
+    name: Add 3 and 7
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: |
+          expr 3 + 7 > sum.txt
+      - name: sumuj
+        uses: actions/upload-artifact@v4
+        with: 
+          name: posumowane
+          path: sum.txt
+
+  job_2:
+    name: Multiply by 9
+    needs: job_1
+    runs-on: windows-latest
+    steps:
+      - name: zaciągaj
+        uses: actions/download-artifact@v4
+        with:
+          name: posumowane
+      
+      - shell: bash
+        run: |
+          value=`cat sum.txt`
+          echo $(expr $value \* 9) 
