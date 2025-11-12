@@ -14,12 +14,17 @@ on:
       environment:
         required: true
         type: environment
+      matrix:
+        required: true
+        type: string
 
 jobs:
   log-the-inputs:
     runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(inputs.matrix) }}
     steps:
-      - name: Print info
+      - name: Print info for ${{matrix.os}}, ${{matrix.version}}
         run: |
           echo "Log level: $LEVEL"
           echo "Tags: $TAGS"
