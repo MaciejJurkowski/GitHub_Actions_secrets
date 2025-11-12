@@ -55,6 +55,12 @@ jobs:
           name: ORG_SECRET
           path: ORG_SECRET.txt
 
+      - name: Get ENV_SECRET2
+        env:
+          secret : ${{secrets.ENV_SECRET2}}
+        run: |
+          echo "ENV_SECRET2: $secret"
+          
       # ENV_SECRET1
       - name: Get ENV_SECRET1
         env:
